@@ -35,6 +35,8 @@ function init() {
 
   //EVENT LISTENERS
 
+  clearCompleted.addEventListener("click", clearTodo);
+
   checkboxParent.addEventListener("click", function (e) {
     const clicked = e.target.closest(".todo-checkbox");
     removeTodo(clicked);
