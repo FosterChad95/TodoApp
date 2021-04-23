@@ -1,0 +1,223 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Josefin Sans", sans-serif;
+  height: 100vh;
+}
+
+.theme-light {
+  --Gray: hsl(0, 0%, 98%);
+  --Grayish_Blue: hsl(236, 33%, 92%);
+  --Light_Grayish_Blue: hsl(233, 11%, 84%);
+  --Dark_Grayish_Blue: hsl(236, 9%, 61%);
+  --Very_Dark_Grayish_Blue: hsl(235, 19%, 35%);
+}
+
+.theme-dark {
+  --Very_Dark_Blue: hsl(235, 21%, 11%);
+  --Very_Dark_Desaturated_Blue: hsl(235, 24%, 19%);
+  --Light_Grayish_Blue: hsl(234, 39%, 85%);
+  --Light_Grayish_Blue: hsl(236, 33%, 92%);
+  --Dark_Grayish_Blue: hsl(234, 11%, 52%);
+  --Very_Dark_Grayish_Blue: hsl(233, 14%, 35%);
+  --Very_Dark_Grayish_Blue: hsl(237, 14%, 26%);
+}
+
+:root {
+  --brightBlue: hsl(220, 98%, 61%);
+  --checkBackground: linear-gradient (hsl(192, 100%, 67%), hsl(280, 87%, 65%));
+}
+
+.container {
+  display: flex;
+  justify-content: flex-start;
+
+  flex-direction: column;
+  background-color: rgba(0, 0, 0, 0.9);
+  height: 100%;
+  width: 100%;
+}
+
+.header {
+  height: 33vh;
+  width: 100%;
+  background: url("./images/bg-desktop-dark.jpg") no-repeat;
+  display: flex;
+  justify-content: space-evenly;
+  z-index: 2;
+}
+
+.header-btn,
+.header-title {
+  align-self: center;
+}
+
+.header-title {
+  font-size: 4rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 1rem;
+}
+
+.btn {
+  background-color: transparent;
+  outline: none;
+  border: none;
+  transition: transform 0.2s;
+}
+
+.btn:focus {
+  outline: none;
+}
+.btn:hover {
+  transform: translateY(-0.3rem);
+}
+
+.btn:active {
+  transform: translateY(-0.15rem);
+}
+
+.todo {
+  width: 30vw;
+  z-index: 3;
+  position: absolute;
+  top: 25%;
+  border-radius: 10px;
+  justify-self: center;
+  align-self: center;
+  overflow: hidden;
+  margin-top: 2rem;
+  box-shadow: 0.2rem 2rem 6rem rgba(0, 0, 0, 0.9);
+}
+
+.todo-input {
+  background-color: hsl(235, 24%, 19%);
+  font-size: 1.5rem;
+  width: 100%;
+  height: 5rem;
+  outline: none;
+  border: none;
+  border-radius: 8px;
+  font-family: inherit;
+  color: #fff;
+  padding: 0.5rem 2rem;
+}
+
+.todo-input::placeholder {
+  font-family: inherit;
+  font-weight: 500;
+}
+
+.todo-list {
+  margin-top: 1rem;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.todo-item {
+  background-color: hsl(235, 24%, 19%);
+  height: 5rem;
+  border-radius: 2px;
+  display: flex;
+  padding: 2rem;
+  width: 100%;
+  align-items: center;
+  font-size: 1.1rem;
+  color: rgba(240, 240, 240, 0.9);
+  font-weight: 500;
+  display: flex;
+  align-content: center;
+  border-bottom: 1px solid rgba(240, 240, 240, 0.6);
+}
+
+.todo-item span {
+  margin-top: 0.35rem;
+}
+
+.text.striked {
+  text-decoration: line-through;
+  opacity: 0.4;
+}
+
+.todo-checkbox {
+  align-self: center;
+  -webkit-appearance: none;
+  background-color: #fafafa;
+  border: 1px solid #cacece;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05),
+    inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05);
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  margin-right: 1.5rem;
+  transition: all 0.3s;
+}
+
+.todo-checkbox:focus {
+  outline: none;
+}
+
+.todo-checkbox.checked {
+  align-self: center;
+  -webkit-appearance: none;
+  background-image: url("/images/check.svg");
+  background-size: 2rem 2rem;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  margin-right: 1.5rem;
+}
+
+.todo-stats {
+  display: flex;
+  background-color: hsl(235, 24%, 19%);
+  border-radius: 3px;
+  padding: 1.1rem;
+  color: hsl(236, 9%, 61%);
+  font-size: 1rem;
+  justify-content: space-between;
+  align-content: center;
+}
+
+.todo-stats--items {
+  margin-top: 0.1rem;
+}
+
+.todo-stats--filter button,
+.todo-stats--clear button {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  font-size: inherit;
+  color: hsl(236, 9%, 61%);
+  font-family: inherit;
+  font-size: inherit;
+  cursor: pointer;
+  transition: all 0.1s linear;
+}
+.todo-stats--filter button:hover,
+.todo-stats--clear button:hover {
+  transform: translateY(-0.1rem);
+  color: var(--brightBlue);
+}
+.todo-stats--filter button:active,
+.todo-stats--clear button:active {
+  transform: translateY(-0.05rem);
+}

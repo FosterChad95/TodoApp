@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://kit.fontawesome.com/88394a7d77.js"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      rel="icon"
+      href="images/icon-check.svg"
+      sizes="12x12"
+      type="image/svg+xml"
+    />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+    <title>Todo app</title>
+  </head>
+  <body>
+    <div class="container">
+      <header class="header">
+        <h1 class="header-title">TODO</h1>
+        <div class="header-btn">
+          <button class="btn">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="26"
+              height="26"
+              class="icon"
+            >
+              <path
+                fill="#FFF"
+                fill-rule="evenodd"
+                d="M13 0c.81 0 1.603.074 2.373.216C10.593 1.199 7 5.43 7 10.5 7 16.299 11.701 21 17.5 21c2.996 0 5.7-1.255 7.613-3.268C23.22 22.572 18.51 26 13 26 5.82 26 0 20.18 0 13S5.82 0 13 0z"
+              />
+            </svg>
+          </button>
+        </div>
+      </header>
+      <div class="todo">
+        <input type="text" class="todo-input" placeholder="Create a new todo" />
+        <ul class="todo-list">
+          <!-- <li class="todo-item">
+            <input name="checkbox" type="checkbox" class="todo-checkbox" />
+            <span class="text">TEST</span>
+          </li> -->
+        </ul>
+        <div class="todo-stats">
+          <div class="todo-stats--items">
+            <span class="number">4 </span><span>items left</span>
+          </div>
+          <div class="todo-stats--filter">
+            <button class="filter-all">All</button>
+            <button class="filter-all">Active</button>
+            <button class="filter-all">Completed</button>
+          </div>
+          <div class="todo-stats--clear">
+            <button class="clear">Clear Completed</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
