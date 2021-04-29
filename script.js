@@ -9,12 +9,12 @@ const filterCompleted = document.querySelector(".filter-completed");
 let counter = 0;
 
 function addTodo(event) {
+  if (event.target.value.length < 1) return;
   const html = `
     <li class="todo-item">
     <input type="checkbox" class="todo-checkbox" />
-    <span class="text">${event.target.value}</span>
+    <span class="text">${event.target.value.trim()}</span>
     </li>`;
-  if (event.target.value.length < 1) return;
   list.insertAdjacentHTML("afterbegin", html);
   event.target.value = "";
   localStorage.setItem("list", list.innerHTML);
@@ -24,7 +24,6 @@ function addTodo(event) {
 
 function removeTodo(element) {
   if (!element) return;
-  const todoText = document.querySelector(".text");
   element.classList.toggle("checked");
   element.nextElementSibling.classList.toggle("striked");
   localStorage.setItem("list", list.innerHTML);
@@ -36,17 +35,96 @@ function removeTodo(element) {
 
 function clearTodo() {
   const items = document.querySelectorAll(".todo-item");
-  items.forEach((el, i) => {
+  items.forEach((el) => {
     if (el.firstElementChild.classList.contains("checked")) {
       el.parentElement.removeChild(el);
     }
   });
 }
 
-function filterTodo(event) {}
-
 function itemsLeft() {
   numberItems.textContent = counter + " ";
+}
+
+function activeFiltered() {
+  filterCompleted.classList.remove("disabled");
+  filterAll.classList.remove("disabled");
+  const items = list.querySelectorAll(".todo-item");
+  const activeItems = [];
+  const completedItems = [];
+
+  if (localStorage.getItem("active")) {
+    activeItems.push(localStorage.getItem("active"));
+  }
+
+  items.forEach((item) => {
+    if (!item.firstElementChild.classList.contains("checked")) {
+      activeItems.push(item.outerHTML);
+    } else {
+      completedItems.push(item.outerHTML);
+    }
+  });
+  list.innerHTML = "";
+  localStorage.setItem("completed", completedItems.join(""));
+  localStorage.setItem("active", activeItems.join(""));
+  const html = activeItems.join("");
+  list.insertAdjacentHTML("afterbegin", html);
+  filterActive.classList.toggle("disabled");
+}
+
+function completedFiltered() {
+  filterActive.classList.remove("disabled");
+  filterAll.classList.remove("disabled");
+  const items = list.querySelectorAll(".todo-item");
+  const activeItems = [];
+  const completedItems = [];
+  if (localStorage.getItem("completed")) {
+    completedItems.push(localStorage.getItem("completed"));
+  }
+  items.forEach((item) => {
+    if (item.firstElementChild.classList.contains("checked")) {
+      completedItems.push(item.outerHTML);
+    } else {
+      activeItems.push(item.outerHTML);
+    }
+  });
+  list.innerHTML = "";
+  localStorage.setItem("completed", completedItems.join(""));
+  localStorage.setItem("active", activeItems.join(""));
+  const html = completedItems.join("");
+  list.insertAdjacentHTML("afterbegin", html);
+  filterCompleted.classList.toggle("disabled");
+}
+
+function disableAll() {
+  filterAll.classList.add("disabled");
+}
+
+function allFiltered() {
+  filterActive.classList.remove("disabled");
+  filterCompleted.classList.remove("disabled");
+  const items = list.querySelectorAll(".todo-item");
+  const activeItems = [];
+  const completedItems = [];
+  if (localStorage.getItem("completed")) {
+    completedItems.push(localStorage.getItem("completed"));
+  }
+  if (localStorage.getItem("active")) {
+    activeItems.push(localStorage.getItem("active"));
+  }
+  items.forEach((item) => {
+    if (item.firstElementChild.classList.contains("checked")) {
+      completedItems.push(item.outerHTML);
+    } else {
+      activeItems.push(item.outerHTML);
+    }
+  });
+  list.innerHTML = "";
+  localStorage.setItem("completed", completedItems.join(""));
+  localStorage.setItem("active", activeItems.join(""));
+  const html = completedItems.concat(activeItems).join("");
+  list.insertAdjacentHTML("afterbegin", html);
+  filterAll.classList.toggle("disabled");
 }
 
 function init() {
@@ -54,12 +132,15 @@ function init() {
   list.innerHTML = localStorage.getItem("list");
   localStorage.clear();
 
+  //Disabling All Filter at start
+  disableAll();
+
   itemsLeft();
   //EVENT LISTENERS
 
-  [filterActive, filterAll, filterCompleted].forEach((element) =>
-    element.addEventListener("click", filterTodo)
-  );
+  filterActive.addEventListener("click", activeFiltered);
+  filterAll.addEventListener("click", allFiltered);
+  filterCompleted.addEventListener("click", completedFiltered);
 
   clearCompleted.addEventListener("click", clearTodo);
 

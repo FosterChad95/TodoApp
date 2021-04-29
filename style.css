@@ -225,3 +225,7 @@ body {
 .todo-stats--clear button:active {
   transform: translateY(-0.05rem);
 }
+
+.disabled {
+  pointer-events: none;
+}
