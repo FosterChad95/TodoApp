@@ -20,10 +20,11 @@ function addTodo(event) {
   };
 
   items.push(listItem);
+  localStorage.setItem("items", JSON.stringify(items));
 
   event.target.value = "";
   renderList();
-  // localStorage.setItem("list", list.innerHTML);
+
   counter++;
   itemsLeft();
 }
@@ -32,14 +33,23 @@ function renderList(type = "all") {
   if (type === "all") {
     const allItems = items
       .map((item) => {
-        return `
+        if (item.completed) {
+          return `
     <li class="todo-item" data-id= ${item.id}>
-    <input type="checkbox" class="todo-checkbox" />
-    <span class="text">${item.text}</span>
+    <input type="checkbox" class="todo-checkbox checked" />
+    <span class="text striked">${item.text}</span>
     </li>`;
+        } else {
+          return `
+        <li class="todo-item" data-id= ${item.id}>
+        <input type="checkbox" class="todo-checkbox" />
+        <span class="text">${item.text}</span>
+        </li>`;
+        }
       })
       .join("");
     list.innerHTML = "";
+
     list.insertAdjacentHTML("afterbegin", allItems);
   }
 
@@ -51,6 +61,21 @@ function renderList(type = "all") {
     <li class="todo-item" data-id= ${item.id}>
     <input type="checkbox" class="todo-checkbox" />
     <span class="text">${item.text}</span>
+    </li>`;
+      })
+      .join("");
+
+    list.innerHTML = "";
+    list.insertAdjacentHTML("afterbegin", allItems);
+  }
+  if (type === "Completed") {
+    const allItems = items
+      .filter((item) => item.completed === true)
+      .map((item) => {
+        return `
+    <li class="todo-item" data-id= ${item.id}>
+    <input type="checkbox" class="todo-checkbox checked" />
+    <span class="text striked">${item.text}</span>
     </li>`;
       })
       .join("");
@@ -69,7 +94,7 @@ function toggleTodo(element) {
       items[i].completed = bool;
     }
   });
-  localStorage.setItem("list", list.innerHTML);
+
   element.classList.contains("checked") && counter >= 0 ? counter-- : counter++;
   itemsLeft();
 }
@@ -77,14 +102,15 @@ function toggleTodo(element) {
 function clearTodo() {
   items.forEach((elements, index) => {
     if (elements.completed === true) {
-      items.splice(index, index + 1);
+      items.splice(index, 1);
     }
   });
+
+  if (filterAll.classList.contains("disabled") || list.childNodes.length < 1) {
+    renderList();
+  }
   if (filterActive.classList.contains("disabled")) {
     renderList("Active");
-  }
-  if (filterAll.classList.contains("disabled")) {
-    renderList();
   }
   if (filterCompleted.classList.contains("disabled")) {
     renderList("Completed");
@@ -99,41 +125,15 @@ function activeFiltered() {
   filterActive.classList.remove("disabled");
   filterAll.classList.remove("disabled");
 
-  filterActive.classList.toggle("disabled");
+  filterActive.classList.add("disabled");
   renderList("Active");
 }
 
 function completedFiltered() {
-  const completedArray = [];
   filterActive.classList.remove("disabled");
   filterAll.classList.remove("disabled");
-  if (localStorage.getItem("completeList")) {
-    list.innerHTML = "";
-    completedArray.push(localStorage.getItem("completeList"));
-    const html = completedArray.join("");
-    list.insertAdjacentHTML("afterbegin", html);
-  } else {
-    const checked = document.querySelectorAll(".checked");
-
-    checked.forEach((el) => {
-      completedArray.push(el.parentElement.outerHTML);
-    });
-
-    list.innerHTML = "";
-    const html = completedArray.join("");
-    list.insertAdjacentHTML("afterbegin", html);
-  }
-  filterCompleted.classList.toggle("disabled");
-  localStorage.setItem("completeList", list.innerHTML);
-  displayHead("Completed Tasks");
-}
-
-function displayHead(title) {
-  todoInput.classList.add("hide");
-  titleInput.classList.remove("hidden");
-  const html = `<h3>${title}</h3>`;
-  titleInput.innerHTML = "";
-  titleInput.insertAdjacentHTML("afterbegin", html);
+  filterCompleted.classList.add("disabled");
+  renderList("Completed");
 }
 
 function disableAll() {
@@ -141,24 +141,21 @@ function disableAll() {
 }
 
 function allFiltered() {
+  renderList();
   filterActive.classList.remove("disabled");
   filterCompleted.classList.remove("disabled");
-  todoInput.classList.remove("hide");
-  titleInput.classList.add("hidden");
-  const items = document.querySelectorAll(".todo-item");
-  if (items.length < 1) return;
 
-  const html = localStorage.getItem("list");
-  list.innerHTML = "";
-  list.insertAdjacentHTML("afterbegin", html);
   filterAll.classList.add("disabled");
 }
 
 function init() {
   //Loading Local Storage on Load
-  list.innerHTML = localStorage.getItem("list");
-  localStorage.clear();
-
+  if (localStorage.getItem("items")) {
+    JSON.parse(localStorage.getItem("items")).forEach((item) =>
+      items.push(item)
+    );
+  }
+  renderList();
   //Disabling All Filter at start
   disableAll(filterAll);
 
