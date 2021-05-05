@@ -94,7 +94,7 @@ function toggleTodo(element) {
       items[i].completed = bool;
     }
   });
-
+  localStorage.setItem("items", JSON.stringify(items));
   element.classList.contains("checked") && counter >= 0 ? counter-- : counter++;
   itemsLeft();
 }
@@ -115,9 +115,14 @@ function clearTodo() {
   if (filterCompleted.classList.contains("disabled")) {
     renderList("Completed");
   }
+  itemsLeft();
 }
 
-function itemsLeft() {
+function itemsLeft(num) {
+  if (num) {
+    counter = num;
+    numberItems.textContent = counter + " ";
+  }
   numberItems.textContent = counter + " ";
 }
 
@@ -159,7 +164,7 @@ function init() {
   //Disabling All Filter at start
   disableAll(filterAll);
 
-  itemsLeft();
+  itemsLeft(items.filter((item) => item.completed === false).length);
   //EVENT LISTENERS
 
   filterActive.addEventListener("click", activeFiltered);
