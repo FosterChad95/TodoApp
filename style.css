@@ -11,40 +11,27 @@ html {
   box-sizing: border-box;
 }
 
+.theme-light {
+  --color-primary: hsl(233, 11%, 84%);
+  --Grayish_Blue: hsl(236, 9%, 61%);
+  --font-color: #000;
+}
+
+.theme-dark {
+  --font-color: #fff;
+  --color-primary: hsl(235, 24%, 19%);
+  --Grayish_Blue: hsl(234, 39%, 85%);
+}
+
 body {
   font-family: "Josefin Sans", sans-serif;
   height: 100vh;
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.9);
+  background-color: var(--Grayish_Blue);
 }
-
-.theme-light {
-  --Gray: hsl(0, 0%, 98%);
-  --Grayish_Blue: hsl(236, 33%, 92%);
-  --Light_Grayish_Blue: hsl(233, 11%, 84%);
-  --Dark_Grayish_Blue: hsl(236, 9%, 61%);
-  --Very_Dark_Grayish_Blue: hsl(235, 19%, 35%);
-}
-
-.theme-dark {
-  --Very_Dark_Blue: hsl(235, 21%, 11%);
-  --Very_Dark_Desaturated_Blue: hsl(235, 24%, 19%);
-  --Light_Grayish_Blue: hsl(234, 39%, 85%);
-  --Light_Grayish_Blue: hsl(236, 33%, 92%);
-  --Dark_Grayish_Blue: hsl(234, 11%, 52%);
-  --Very_Dark_Grayish_Blue: hsl(233, 14%, 35%);
-  --Very_Dark_Grayish_Blue: hsl(237, 14%, 26%);
-}
-
-:root {
-  --brightBlue: hsl(220, 98%, 61%);
-  --checkBackground: linear-gradient (hsl(192, 100%, 67%), hsl(280, 87%, 65%));
-}
-
 .container {
   display: flex;
   justify-content: flex-start;
-
   flex-direction: column;
   height: 100%;
   width: 100%;
@@ -73,7 +60,7 @@ body {
 .header-title {
   font-size: 4rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--font-color);
   letter-spacing: 1rem;
 }
 
@@ -108,7 +95,7 @@ body {
 }
 
 .todo-input {
-  background-color: hsl(235, 24%, 19%);
+  background-color: var(--color-primary);
   font-size: 1.5rem;
   width: 100%;
   height: 5rem;
@@ -136,7 +123,7 @@ body {
 }
 
 .todo-item {
-  background-color: hsl(235, 24%, 19%);
+  background-color: var(--color-primary);
   height: 5rem;
   border-radius: 2px;
   display: flex;
@@ -144,7 +131,7 @@ body {
   width: 100%;
   align-items: center;
   font-size: 1.1rem;
-  color: rgba(240, 240, 240, 0.9);
+  color: var(--font-color);
   font-weight: 500;
   display: flex;
   align-content: center;
@@ -196,10 +183,10 @@ body {
 
 .todo-stats {
   display: flex;
-  background-color: hsl(235, 24%, 19%);
+  background-color: var(--color-primary);
   border-radius: 3px;
   padding: 1.1rem;
-  color: hsl(236, 9%, 61%);
+  color: var(--font-color);
   font-size: 1rem;
   justify-content: space-between;
   align-content: center;
@@ -216,7 +203,7 @@ body {
   outline: none;
   background-color: transparent;
   font-size: inherit;
-  color: hsl(236, 9%, 61%);
+  color: var(--font-color);
   font-family: inherit;
   font-size: inherit;
   cursor: pointer;
