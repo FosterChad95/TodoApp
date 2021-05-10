@@ -42,7 +42,6 @@ function clickTheme() {
 }
 
 function setTheme(theme) {
-  localStorage.setItem("theme", theme);
   document.documentElement.className = theme;
   if (todoImage.classList.contains("dark")) {
     todoImage.classList.remove("dark");
@@ -52,14 +51,6 @@ function setTheme(theme) {
     todoImage.classList.remove("light");
     todoImage.classList.add("dark");
     todoImage.src = "images/bg-desktop-dark.jpg";
-  }
-}
-
-function toggleTheme() {
-  if (localStorage.getItem("theme") === "theme-dark") {
-    setTheme("theme-light");
-  } else {
-    setTheme("theme-dark");
   }
 }
 
