@@ -159,6 +159,7 @@ function clearTodo() {
   if (filterCompleted.classList.contains("disabled")) {
     renderList("Completed");
   }
+  localStorage.setItem("items", JSON.stringify(items));
   itemsLeft();
 }
 
@@ -199,6 +200,7 @@ function allFiltered() {
 
 function init() {
   //Loading Local Storage on Load
+
   if (localStorage.getItem("items")) {
     JSON.parse(localStorage.getItem("items")).forEach((item) =>
       items.push(item)
